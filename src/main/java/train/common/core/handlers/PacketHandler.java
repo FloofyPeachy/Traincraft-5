@@ -9,13 +9,16 @@ package train.common.core.handlers;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import train.common.Traincraft;
 import train.common.adminbook.ItemAdminBook;
 import train.common.core.network.*;
 import train.common.library.Info;
-import train.common.mtc.packets.*;
-import train.common.mtc.packets.handlers.*;
+import train.common.mtc.network.*;
+import train.common.mtc.network.handlers.*;
 
 public class PacketHandler {
 
@@ -58,23 +61,33 @@ public class PacketHandler {
 		Traincraft.builderChannel.registerMessage(PacketTrackBuilderFollow.Handler.class,
 				PacketTrackBuilderFollow.class, 9, Side.SERVER);
 
-		if (Loader.isModLoaded("ComputerCraft")) {
-			Traincraft.itsChannel.registerMessage(PacketSetSpeedHandler.class, PacketSetSpeed.class, 200, Side.CLIENT);
-			Traincraft.itsChannel.registerMessage(PacketSetSpeedHandler.class, PacketSetSpeed.class, 212, Side.SERVER);
-			Traincraft.updateTrainIDChannel.registerMessage(PacketUpdateTrainID.Handler.class, PacketUpdateTrainID.class, 11, Side.SERVER);
-        		Traincraft.updateDestinationChannel.registerMessage(PacketDestination.Handler.class, PacketDestination.class, 12, Side.SERVER);
-			Traincraft.itnsChannel.registerMessage(PacketNextSpeedHandler.class, PacketNextSpeed.class, 211, Side.CLIENT);
-			Traincraft.mtlChannel.registerMessage(PacketMTCLevelUpdateHandler.class, PacketMTCLevelUpdate.class, 201, Side.SERVER);
-			Traincraft.msChannel.registerMessage(PacketMTChandler.class, PacketMTC.class, 202, Side.SERVER);
-			Traincraft.mscChannel.registerMessage(PacketMTChandler.class, PacketMTC.class, 203, Side.CLIENT);
-			Traincraft.atoChannel.registerMessage(PacketATOHandler.class, PacketATO.class, 205, Side.CLIENT);
-			Traincraft.atoDoSlowDownChannel.registerMessage(PacketATODOSlowDownHandler.class, PacketATODoSlowDown.class, 206, Side.SERVER);
-			Traincraft.atoDoAccelChannel.registerMessage(PacketATODoAccelHandler.class, PacketDoAccel.class, 207, Side.SERVER);
-			Traincraft.atoSetStopPoint.registerMessage(PacketATOSetStopPointHandler.class, PacketATOSetStopPoint.class, 208, Side.CLIENT);
-			Traincraft.NCSlowDownChannel.registerMessage(PacketNCSlowDownHandler.class, PacketNCSlowDown.class, 209, Side.SERVER);
-			//Traincraft.ctChannel.registerMessage(PacketWMTCChannelTransmitHandler.class, PacketWMTCChannelTransmit.class, 210, Side.CLIENT);
-			Traincraft.gsfsChannel.registerMessage(PacketGetSomethingFromServerHandler.class, PacketGetSomethingFromServer.class, 213, Side.SERVER);
-			Traincraft.gsfsrChannel.registerMessage(PacketThingFromServerHandler.class, PacketThingFromServer.class, 214, Side.CLIENT);
-		}
+		Traincraft.mtcBlockChannel.registerMessage(HANDLERS[0], PacketUpdateSpeedTransmitter.class, 200, Side.SERVER);
+		Traincraft.mtcBlockChannel.registerMessage(HANDLERS[1], PacketUpdateStopPointTransmitter.class, 201, Side.SERVER);
+		Traincraft.mtcChannel.registerMessage(HANDLERS[2], PacketSpeedLimit.class, 203, Side.CLIENT);
+		Traincraft.mtcChannel.registerMessage(HANDLERS[3], PacketStopPoint.class, 204, Side.CLIENT);
+		Traincraft.mtcChannel.registerMessage(HANDLERS[4], PacketMTCStatus.class, 205, Side.CLIENT);
+
 	}
+
+	private static final IMessageHandler[] HANDLERS = new IMessageHandler[]{
+			new IMessageHandler<IMessage, IMessage>() {
+				@Override public IMessage onMessage(IMessage message, MessageContext ctx) {return null;}
+			},
+			new IMessageHandler<IMessage, IMessage>() {
+				@Override public IMessage onMessage(IMessage message, MessageContext ctx) {return null;}
+			},
+			new IMessageHandler<IMessage, IMessage>() {
+				@Override public IMessage onMessage(IMessage message, MessageContext ctx) {return null;}
+			},
+			new IMessageHandler<IMessage, IMessage>() {
+				@Override public IMessage onMessage(IMessage message, MessageContext ctx) {return null;}
+			},
+			new IMessageHandler<IMessage, IMessage>() {
+				@Override public IMessage onMessage(IMessage message, MessageContext ctx) {return null;}
+			},
+			new IMessageHandler<IMessage, IMessage>() {
+				@Override public IMessage onMessage(IMessage message, MessageContext ctx) {return null;}
+			}
+	};
 }
+

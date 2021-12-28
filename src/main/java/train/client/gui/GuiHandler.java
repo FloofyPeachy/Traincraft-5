@@ -27,7 +27,7 @@ public class GuiHandler implements IGuiHandler {
 
             if (player.ridingEntity != null) {
 
-                return new GuiSpeedTransmitter(te);
+                //return new GuiSpeedTransmitter(te);
 
             } else {
                 return null;

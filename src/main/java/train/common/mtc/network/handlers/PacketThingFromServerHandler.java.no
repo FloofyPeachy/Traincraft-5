@@ -1,0 +1,15 @@
+package train.common.mtc.network.handlers;
+
+
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import train.common.mtc.network.PacketThingFromServer;
+
+public class PacketThingFromServerHandler implements IMessageHandler<PacketThingFromServer, IMessage> {
+    @Override
+    public IMessage onMessage(PacketThingFromServer message, MessageContext ctx) {
+
+        return null;
+}
+}

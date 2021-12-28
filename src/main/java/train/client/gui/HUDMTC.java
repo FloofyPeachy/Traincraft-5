@@ -65,16 +65,16 @@ public class HUDMTC extends GuiScreen {
 				this.drawString(this.game.fontRenderer, "Speed Limit: " + rcCar.speedLimit + " km/h", xPos + 4, yPos, 14737632);
 			}
 			this.drawString(this.game.fontRenderer, "Next Speed Limit: " + rcCar.nextSpeedLimit + " km/h", xPos + 4, yPos + 10, 14737632);
-			rcCar.distanceFromStopPoint = rcCar.getDistance(rcCar.xFromStopPoint, rcCar.yFromStopPoint, rcCar.zFromStopPoint);
-			rcCar.distanceFromSpeedChange = rcCar.getDistance(rcCar.xSpeedLimitChange, rcCar.ySpeedLimitChange,rcCar.zSpeedLimitChange);
-			rcCar.distanceFromStationStop = rcCar.getDistance(rcCar.xStationStop, rcCar.yStationStop,rcCar.zStationStop);
-			if (rcCar.xFromStopPoint != 0 && rcCar.yFromStopPoint != 0 && rcCar.zFromStopPoint != 0) {
+			rcCar.distanceFromStopPoint = rcCar.getDistance(rcCar.stopPoint3.xCoord, rcCar.stopPoint3.yCoord, rcCar.stopPoint3.zCoord);
+			rcCar.distanceFromSpeedChange = rcCar.getDistance(rcCar.speedChange3.xCoord, rcCar.speedChange3.yCoord,rcCar.speedChange3.zCoord);
+			rcCar.distanceFromStationStop = rcCar.getDistance(rcCar.stationStop3.xCoord, rcCar.stationStop3.yCoord,rcCar.stationStop3.zCoord);
+			if (rcCar.stopPoint3.xCoord != 0) {
 				this.drawString(this.game.fontRenderer, "Stop in " + Math.round(rcCar.distanceFromStopPoint)  + " blocks.", xPos + 4, yPos + 19, 14737632);
 			}
-			if (rcCar.xFromStopPoint == 0 && rcCar.yFromStopPoint == 0 && rcCar.zFromStopPoint == 0 && rcCar.xStationStop != 0 && rcCar.yStationStop != 0  && rcCar.xStationStop != 0 ) {
+			if (rcCar.stationStop3.xCoord != 0) {
 				this.drawString(this.game.fontRenderer, "Station stop in " +Math.round(rcCar.distanceFromStationStop) + " blocks.", xPos + 4, yPos + 19, 14737632);
 			}
-			if (rcCar.xSpeedLimitChange != 0 && rcCar.ySpeedLimitChange != 0 && rcCar.zSpeedLimitChange != 0) {
+			if (rcCar.speedChange3.xCoord != 0) {
 				this.drawString(this.game.fontRenderer, "Next speed limit in " + Math.round(rcCar.distanceFromSpeedChange)  + " blocks.", xPos + 4, yPos + 28, 14737632);
 			}
 

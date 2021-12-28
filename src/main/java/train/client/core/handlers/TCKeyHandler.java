@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.Vec3;
 import org.lwjgl.input.Keyboard;
 import train.client.gui.GuiMTCInfo;
 import train.common.Traincraft;
@@ -122,13 +123,10 @@ public class TCKeyHandler {
 						train.mtcStatus = 0;
 						train.speedLimit = 0;
 						train.nextSpeedLimit = 0;
-						train.xSpeedLimitChange = 0.0;
-						train.ySpeedLimitChange = 0.0;
-						train.zSpeedLimitChange = 0.0;
-						train.xFromStopPoint = 0.0;
-						train.yFromStopPoint = 0.0;
-						train.zFromStopPoint = 0.0;
-						train.trainLevel = "0";
+						train.speedChange3 = Vec3.createVectorHelper(0,0,0);
+						train.stopPoint3 = Vec3.createVectorHelper(0,0,0);
+
+						train.trainLevel = 0;
 
 					}
 					sendKeyControlsPacket(17);

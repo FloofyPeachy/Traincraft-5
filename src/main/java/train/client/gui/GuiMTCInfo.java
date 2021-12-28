@@ -11,7 +11,7 @@ import train.common.Traincraft;
 import train.common.api.Locomotive;
 import train.common.core.network.PacketDestination;
 import train.common.core.network.PacketUpdateTrainID;
-import train.common.mtc.packets.PacketMTCLevelUpdate;
+import train.common.mtc.network.PacketMTCLevelUpdate;
 
 public class GuiMTCInfo extends GuiScreen {
        Locomotive theLocomotive;
@@ -34,7 +34,7 @@ public class GuiMTCInfo extends GuiScreen {
         trainID = new GuiTCTextField(fontRendererObj, this.width/2 -5, this.height/2 - 20, 80,15);
         okayButton = new GuiButton(0,this.width/2 -5, this.height/2 + 40, 60,25, "Okay" );
         trainLevel.setMaxStringLength(1);
-        trainLevel.setText(theLocomotive.trainLevel);
+        trainLevel.setText(String.valueOf(theLocomotive.trainLevel));
         trainID.setMaxStringLength(6);
         trainID.setText(theLocomotive.trainID);
         destination.setText(theLocomotive.getDestinationGUI());
@@ -93,9 +93,9 @@ public class GuiMTCInfo extends GuiScreen {
         if (par2 == 1 || par2 == Keyboard.KEY_ESCAPE) {
             if (!destination.isFocused() || !trainID.isFocused() || !trainLevel.isFocused()) {
                 mc.thePlayer.closeScreen();
-                theLocomotive.trainLevel = trainLevel.getText();
+                theLocomotive.trainLevel = Integer.parseInt(trainLevel.getText());
                 if (!trainLevel.getText().equals("")) {
-                    Traincraft.mtlChannel.sendToServer(new PacketMTCLevelUpdate(theLocomotive.getEntityId(), Integer.parseInt(trainLevel.getText())));
+                    //Traincraft.mtlChannel.sendToServer(new PacketMTCLevelUpdate(theLocomotive.getEntityId(), Integer.parseInt(trainLevel.getText())));
                 }
 
                 theLocomotive.trainID = trainID.getText();

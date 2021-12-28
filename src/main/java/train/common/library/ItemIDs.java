@@ -68,7 +68,7 @@ public enum ItemIDs {
 	paintbrushThing("ItemPaintbrushThing","paintbrushThing",1),
 	whistle("ItemWhistle","whistle", 1),
 	bolt("ItemBolt", "bolt", 1),
-
+	positionMarker("ItemPositionMarker", "positon_marker", 5),
 	atoCard("ItemATOCard", "ato_card", 5),
 	minecartWork("ItemRollingStock", "train_work", 4),
 	minecartTender("ItemRollingStock", "train_tender", 4),

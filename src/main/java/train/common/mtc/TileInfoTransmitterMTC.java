@@ -12,7 +12,8 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import train.common.Traincraft;
 import train.common.api.Locomotive;
-import train.common.mtc.packets.PacketMTC;
+import train.common.mtc.network.PacketMTC;
+import train.common.mtc.network.PacketMTCStatus;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class TileInfoTransmitterMTC extends TileEntity implements IPeripheral {
 
 				 if (activated) {
                     //ExampleMod.msChannel.sendToAll(new PacketMTC(daTrain.getEntityId(), MTCInfo, 2));
-                    Traincraft.mscChannel.sendToAllAround(new PacketMTC(daTrain.getEntityId(), MTCInfo, 0) , new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, daTrain.posX, daTrain.posY, daTrain.posZ, 150.0D));
+                    Traincraft.mtcChannel.sendToAllAround(new PacketMTCStatus(daTrain.getEntityId(), MTCInfo, 0) , new NetworkRegistry.TargetPoint(this.worldObj.provider.dimensionId, daTrain.posX, daTrain.posY, daTrain.posZ, 150.0D));
 
                     daTrain.mtcStatus =  MTCInfo;
                     daTrain.currentSignalBlock = this.signalBlock;

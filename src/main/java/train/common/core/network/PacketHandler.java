@@ -8,12 +8,15 @@
 package train.common.core.network;
 
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import train.common.Traincraft;
 import train.common.adminbook.ItemAdminBook;
 import train.common.library.Info;
-import train.common.mtc.packets.*;
-import train.common.mtc.packets.handlers.*;
+import train.common.mtc.network.*;
+import train.common.mtc.network.handlers.*;
 
 public class PacketHandler {
 
@@ -64,8 +67,12 @@ public class PacketHandler {
 
 		Traincraft.updateTrainIDChannel.registerMessage(PacketUpdateTrainID.Handler.class, PacketUpdateTrainID.class, 11, Side.SERVER);
         Traincraft.updateDestinationChannel.registerMessage(PacketDestination.Handler.class, PacketDestination.class, 12, Side.SERVER);
-		Traincraft.itsChannel.registerMessage(PacketSetSpeedHandler.class, PacketSetSpeed.class, 200, Side.CLIENT);
+
+
+
+	/*	Traincraft.itsChannel.registerMessage(PacketSetSpeedHandler.class, PacketSetSpeed.class, 200, Side.CLIENT);
 		Traincraft.itsChannel.registerMessage(PacketSetSpeedHandler.class, PacketSetSpeed.class, 212, Side.SERVER);
+
 
 		Traincraft.itnsChannel.registerMessage(PacketNextSpeedHandler.class, PacketNextSpeed.class, 211, Side.CLIENT);
 		Traincraft.mtlChannel.registerMessage(PacketMTCLevelUpdateHandler.class,  PacketMTCLevelUpdate.class, 201, Side.SERVER);
@@ -78,6 +85,9 @@ public class PacketHandler {
 		Traincraft.NCSlowDownChannel.registerMessage(PacketNCSlowDownHandler.class, PacketNCSlowDown.class, 209, Side.SERVER);
 		//Traincraft.ctChannel.registerMessage(PacketWMTCChannelTransmitHandler.class, PacketWMTCChannelTransmit.class, 210, Side.CLIENT);
 		Traincraft.gsfsChannel.registerMessage(PacketGetSomethingFromServerHandler.class, PacketGetSomethingFromServer.class, 213, Side.SERVER);
-		Traincraft.gsfsrChannel.registerMessage(PacketThingFromServerHandler.class, PacketThingFromServer.class, 214, Side.CLIENT);
+		Traincraft.gsfsrChannel.registerMessage(PacketThingFromServerHandler.class, PacketThingFromServer.class, 214, Side.CLIENT);*/
 	}
+
+
+
 }

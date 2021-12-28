@@ -103,6 +103,7 @@ public class TCItems {
 		ItemIDs.paintbrushThing.item = new ItemPaintbrushThing();
 		ItemIDs.whistle.item = new ItemWhistle();
 		ItemIDs.bolt.item = new ItemBolt(); //this is the spike for crafting
+		ItemIDs.positionMarker.item = new ItemPositionMarker();
 	}
 	
 	private static void registerItems() {

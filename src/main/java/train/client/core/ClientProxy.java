@@ -43,6 +43,8 @@ import train.common.entity.zeppelin.EntityZeppelinTwoBalloons;
 import train.common.library.BlockIDs;
 import train.common.library.GuiIDs;
 import train.common.library.Info;
+import train.common.mtc.TileTransmitterSpeed;
+import train.common.mtc.TileTransmitterStopPoint;
 import train.common.tile.*;
 import train.common.tile.tileSwitch.*;
 import train.common.wellcar.GuiFortyFootContainer;
@@ -74,10 +76,10 @@ public class ClientProxy extends CommonProxy {
 		ClientTickHandler tickHandler = new ClientTickHandler();
 		CustomRenderHandler renderHandler = new CustomRenderHandler();
 		HUDloco huDloco = new HUDloco();
-		if (Loader.isModLoaded("ComputerCraft")){
+
 			HUDMTC hudMTC = new HUDMTC();
 			registerEvent(hudMTC);
-		}
+
 
 		registerEvent(tickHandler);
 		registerEvent(renderHandler);
@@ -217,9 +219,10 @@ public class ClientProxy extends CommonProxy {
 			return riddenByEntity != null ? new GuiZepp(riddenByEntity.inventory, entity) : null;
 		case (GuiIDs.DIGGER):
 			return riddenByEntity != null ? new GuiBuilder(player, riddenByEntity.inventory, entity) : null;
-		case (GuiIDs.MTC_INFO):
-			return riddenByEntity != null && Loader.isModLoaded("ComputerCraft") ? new GuiMTCInfo(player) : null;
-
+		case (GuiIDs.SPEED_TRANSMITTER):
+			return te instanceof TileTransmitterSpeed ? new GuiSpeedTransmitter(te) : null;
+		case (GuiIDs.STOPPOINT_TRANSMITTER):
+			return te instanceof TileTransmitterStopPoint ? new GuiStopPointTransmitter(te) : null;
 			//Stationary entities while player is not riding. 
 		case (GuiIDs.FREIGHT):
 			return entity1 != null ? new GuiFreight(player,player.inventory, entity1) : null;

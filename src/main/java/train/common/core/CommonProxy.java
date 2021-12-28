@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
+import train.client.gui.GuiSpeedTransmitter;
 import train.common.Traincraft;
 import train.common.api.EntityRollingStock;
 import train.common.api.Freight;
@@ -101,14 +102,14 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerTileEntity(TilekSignal.class, "tileksignal");
 		GameRegistry.registerTileEntity(TileSpeedSign.class, "tilespeedsign");
 
-		if (Loader.isModLoaded("ComputerCraft")) {
-			GameRegistry.registerTileEntity(TileInfoTransmitterSpeed.class, "tileInfoTransmitterSpeed");
+		//if (Loader.isModLoaded("ComputerCraft")) {
+			GameRegistry.registerTileEntity(TileTransmitterSpeed.class, "tileInfoTransmitterSpeed");
 			GameRegistry.registerTileEntity(TileInfoTransmitterMTC.class, "tileInfoTransmitterMTC");
-			GameRegistry.registerTileEntity(TileInfoGrabberMTC.class, "tileInfoReceiverMTC");
-			GameRegistry.registerTileEntity(TileInfoGrabberDestination.class, "tileInfoReceiverDestination");
-			GameRegistry.registerTileEntity(TileATOTransmitterStopPoint.class, "tileATOTransmitterStopPoint");
-			GameRegistry.registerTileEntity(TilePDMInstructionRadio.class, "tilePDMInstructionRadio");
-		}
+			GameRegistry.registerTileEntity(TileReceiverMTC.class, "tileInfoReceiverMTC");
+			GameRegistry.registerTileEntity(TileReceiverDestination.class, "tileInfoReceiverDestination");
+			GameRegistry.registerTileEntity(TileTransmitterStopPoint.class, "tileATOTransmitterStopPoint");
+			GameRegistry.registerTileEntity(TileInstructionRadio.class, "tilePDMInstructionRadio");
+		//}
 
 		//GameRegistry.registerTileEntity(TileFortyFootContainer.class, "tileFortyFootContainer");
 	}
@@ -119,10 +120,10 @@ public class CommonProxy implements IGuiHandler {
 			Method computerCraft_registerPeripheralProvider = computerCraft.getMethod("registerPeripheralProvider", new Class[] { Class.forName("dan200.computercraft.api.peripheral.IPeripheralProvider") });
 
 			//Register all CC required blocks
-			computerCraft_registerPeripheralProvider.invoke(null, BlockInfoTransmitterSpeed.instance);
-			computerCraft_registerPeripheralProvider.invoke(null, BlockInfoGrabberMTC.instance);
-			computerCraft_registerPeripheralProvider.invoke(null, BlockInfoTransmitterMTC.instance);
-			computerCraft_registerPeripheralProvider.invoke(null, BlockATOTransmitterStopPoint.instance);
+			computerCraft_registerPeripheralProvider.invoke(null, BlockTransmitterSpeed.instance);
+			computerCraft_registerPeripheralProvider.invoke(null, BlockReceiverMTC.instance);
+			computerCraft_registerPeripheralProvider.invoke(null, BlockTransmitterMTC.instance);
+			computerCraft_registerPeripheralProvider.invoke(null, BlockTransmitterStopPoint.instance);
 
 		} catch (NoSuchMethodException e) {
 			e.printStackTrace();
@@ -189,6 +190,10 @@ public class CommonProxy implements IGuiHandler {
 			return entity1 != null && entity1 instanceof EntityTracksBuilder ? new InventoryBuilder(player.inventory, (EntityTracksBuilder) entity1) : null;
 		case (GuiIDs.LIQUID):
 			return entity1 != null && entity1 instanceof LiquidTank ? new InventoryLiquid(player.inventory, (LiquidTank) entity1) : null;
+		case (GuiIDs.SPEED_TRANSMITTER):
+			return te instanceof TileTransmitterSpeed ? new GuiSpeedTransmitter(te) : null;
+		case (GuiIDs.STOPPOINT_TRANSMITTER):
+			return te instanceof TileTransmitterStopPoint ? new GuiSpeedTransmitter(te) : null;
 		/*case (GuiIDs.FORTY_FOOT_CONTAINER):
 			return new ContainerStorage((TileFortyFootContainer)te, player);*/
 

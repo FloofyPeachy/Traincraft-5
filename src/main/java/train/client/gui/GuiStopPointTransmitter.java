@@ -4,42 +4,44 @@ package train.client.gui;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Vec3;
 import org.lwjgl.input.Keyboard;
 import train.common.Traincraft;
 import train.common.items.ItemPositionMarker;
-import train.common.mtc.TileTransmitterSpeed;
+import train.common.mtc.TileTransmitterStopPoint;
 import train.common.mtc.network.PacketUpdateSpeedTransmitter;
+import train.common.mtc.network.PacketUpdateStopPointTransmitter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiSpeedTransmitter extends GuiScreen {
-    private TileTransmitterSpeed baseTile;
+public class GuiStopPointTransmitter extends GuiScreen {
+    private TileTransmitterStopPoint baseTile;
 
 
-    private GuiTextField speedLimitField;
-    private GuiTextField nextSpeedLimitField;
-    private GuiTextField nextSpeedXField;
-    private GuiTextField nextSpeedYField;
-    private GuiTextField nextSpeedZField;
+    private GuiTextField stopPointXField;
+    private GuiTextField stopPointYField;
+    private GuiTextField stopPointZField;
     private GuiTextField profileTextField;
-    private GuiTextField onRedstoneProfileField;
 
     private GuiButton profileChange;
     private GuiButton onRedstone; //On Redstone: Do nothing, secondary profile
     private GuiButton done; //On Redstone: Do nothing, secondary profile
     private GuiButton addFromItem;
+    private GuiButton stopType;
 
     public int xSize = 305;
     public int ySize = 274;
     public int guiLeft;
     public int guiTop;
 
-    public List<int[]> speedProfiles = new ArrayList<>();
+    public List<int[]> stopProfiles = new ArrayList<>();
 
     int profile = 0;
     int redstoneReaction;
@@ -50,15 +52,15 @@ public class GuiSpeedTransmitter extends GuiScreen {
     //0: Do nothing
     //1: Activate/Deactivate
     //2: Use Profile 2
-    public GuiSpeedTransmitter() {
-        speedProfiles.add(new int[]{0, 0, 0, 0, 0});
-        speedProfiles.add(new int[]{0, 0, 0, 0, 0});
-        speedProfiles.add(new int[]{0, 0, 0, 0, 0});
-        speedProfiles.add(new int[]{0, 0, 0, 0, 0});
+    public GuiStopPointTransmitter() {
+        stopProfiles.add(new int[]{0, 0, 0, 0, 0});
+        stopProfiles.add(new int[]{0, 0, 0, 0, 0});
+        stopProfiles.add(new int[]{0, 0, 0, 0, 0});
+        stopProfiles.add(new int[]{0, 0, 0, 0, 0});
     }
 
-    public GuiSpeedTransmitter(TileEntity te) {
-        baseTile = (TileTransmitterSpeed)te;
+    public GuiStopPointTransmitter(TileEntity te) {
+        baseTile = (TileTransmitterStopPoint)te;
     }
 
     @Override
@@ -68,23 +70,19 @@ public class GuiSpeedTransmitter extends GuiScreen {
         int height = sr.getScaledHeight();
         this.guiLeft = (this.width - this.xSize) / 2;
         this.guiTop = (this.height - this.ySize) / 2;
-        int theW = mc.fontRenderer.getStringWidth("MTC Speed Transmitter");
+        int theW = mc.fontRenderer.getStringWidth("MTC Stop Point Transmitter");
 
-        speedLimitField = new GuiTextField(fontRendererObj, width / 2 + 5, 46, 27, 15);
-        nextSpeedLimitField = new GuiTextField(fontRendererObj, width / 2 + 5, 66, 27, 15);
-        nextSpeedXField = new GuiTextField(fontRendererObj, width / 2 + 5, 86, 50, 15);
-        nextSpeedYField = new GuiTextField(fontRendererObj, width / 2 + 5, 106, 50, 15);
-        nextSpeedZField = new GuiTextField(fontRendererObj, width / 2 + 5, 126, 50, 15);
+        stopPointXField = new GuiTextField(fontRendererObj, width / 2 + 5, 46, 50, 15);
+        stopPointYField = new GuiTextField(fontRendererObj, width / 2 + 5, 66, 50, 15);
+        stopPointZField = new GuiTextField(fontRendererObj, width / 2 + 5, 86, 50, 15);
         profileTextField = new GuiTextField(fontRendererObj, width / 2 + 130, 148, 15, 15);
       //  onRedstoneProfileField = new GuiTextField(fontRendererObj, width / 2 + 20, 160, 50, 15);
 
-        speedProfiles = baseTile.speedProfiles;
+        stopProfiles = baseTile.stopProfiles;
 
-        speedLimitField.setText(String.valueOf(speedProfiles.get(0)[0]));
-        nextSpeedLimitField.setText(String.valueOf(speedProfiles.get(0)[1]));
-        nextSpeedXField.setText(String.valueOf(speedProfiles.get(0)[2]));
-        nextSpeedYField.setText(String.valueOf(speedProfiles.get(0)[3]));
-        nextSpeedZField.setText(String.valueOf(speedProfiles.get(0)[4]));
+        stopPointXField.setText(String.valueOf(stopProfiles.get(0)[0]));
+        stopPointYField.setText(String.valueOf(stopProfiles.get(0)[1]));
+        stopPointZField.setText(String.valueOf(stopProfiles.get(0)[2]));
 
 
        // nextSpeedY = new GuiTextField(fontRendererObj, width / 2 - 12, 36, 27, 15);
@@ -94,10 +92,11 @@ public class GuiSpeedTransmitter extends GuiScreen {
         done = new GuiButton(1, width / 2 - 30, 200, 60, 20, "Done");
         profileChange = new GuiButton(3, width / 2 - 30, 20, 60, 20, "Profile 0");
         addFromItem = new GuiButton(4, width / 2 - 60, 180, 130, 20, "Fill from Position Marker");
+        stopType = new GuiButton(5, width / 2 + 4, 106, 100, 20, (baseTile.stopProfiles.get(0)[3] == 0 ? "Standard Stop" : "Station Stop"));
        buttonList.add(onRedstone);
        buttonList.add(done);
        buttonList.add(profileChange);
-
+        buttonList.add(stopType);
        if (Minecraft.getMinecraft().thePlayer.getHeldItem() != null && Minecraft.getMinecraft().thePlayer.getHeldItem().getItem() instanceof ItemPositionMarker) {
            NBTTagCompound tagCompound = Minecraft.getMinecraft().thePlayer.getHeldItem().getTagCompound();
            System.out.println(tagCompound==null);
@@ -140,20 +139,17 @@ public class GuiSpeedTransmitter extends GuiScreen {
         int margin = 4;
        // Gui.drawRect(width / 2 + 40, height / 2 + 40,width / 2 + 50, height / 2 + 80, 0xFFFFFFFF);
 
-        int theW = mc.fontRenderer.getStringWidth("MTC Speed Transmitter");
-        fontRendererObj.drawString("MTC Speed Transmitter", width / 2 - theW / 2, 6 , 0xFFFFFF);
-        fontRendererObj.drawString("Speed Limit: ", width / 2 - theW / 2, 50 , 0xFFFFFF);
-        fontRendererObj.drawString("Next Speed Limit: ", width / 2 - theW / 2 - 26, 69 , 0xFFFFFF);
-        if (!nextSpeedLimitField.getText().equals("")) {
-            if (!nextSpeedLimitField.getText().equals("0")) {
-                fontRendererObj.drawString("X Coordinate:", width / 2 - theW / 2 - 10, 89, 0xFFFFFF);
-                fontRendererObj.drawString("Y Coordinate:", width / 2 - theW / 2 - 10, 109, 0xFFFFFF);
-                fontRendererObj.drawString("Z Coordinate:", width / 2 - theW / 2 - 10, 129, 0xFFFFFF);
-                nextSpeedXField.drawTextBox();
-                nextSpeedYField.drawTextBox();
-                nextSpeedZField.drawTextBox();
-            }
-        }
+        int theW = mc.fontRenderer.getStringWidth("MTC Stop Point Transmitter");
+        fontRendererObj.drawString("MTC Stop Point Transmitter", width / 2 - theW / 2, 6 , 0xFFFFFF);
+
+         fontRendererObj.drawString("X Coordinate:", width / 2 - theW / 2 - 10, 49, 0xFFFFFF);
+         fontRendererObj.drawString("Y Coordinate:", width / 2 - theW / 2 - 10, 69, 0xFFFFFF);
+         fontRendererObj.drawString("Z Coordinate:", width / 2 - theW / 2 - 10, 89, 0xFFFFFF);
+            fontRendererObj.drawString("Stop Type: ", width / 2 - theW / 2 - 10, 112, 0xFFFFFF);
+         stopPointXField.drawTextBox();
+         stopPointYField.drawTextBox();
+         stopPointZField.drawTextBox();
+
 
         if (redstoneReaction == 2) {
             profileTextField.drawTextBox();
@@ -166,8 +162,7 @@ public class GuiSpeedTransmitter extends GuiScreen {
         }*/
        // timeoutTime.drawTextBox();
         //timeoutTime.setText(String.valueOf(timeoutAmount));
-        speedLimitField.drawTextBox();
-        nextSpeedLimitField.drawTextBox();
+
         //nextSpeedX.drawTextBox();
        // nextSpeedY.drawTextBox();
         //nextSpeedZ.drawTextBox();
@@ -179,11 +174,10 @@ public class GuiSpeedTransmitter extends GuiScreen {
     @SideOnly(Side.CLIENT)
     protected void actionPerformed(GuiButton button) {
         if (button.id == 1) {
-            //Do button 1 stuff here.
             int profil = 0;
-            for (int[] array : speedProfiles) {
-                Traincraft.mtcBlockChannel.sendToServer(new PacketUpdateSpeedTransmitter(baseTile.getWorldObj().provider.dimensionId, baseTile.xCoord, baseTile.yCoord, baseTile.zCoord,
-                        array[0], array[1], Vec3.createVectorHelper(array[2], array[3], array[4]), profil, redstoneReaction, redstoneProfile));
+            for (int[] array : stopProfiles) {
+                Traincraft.mtcBlockChannel.sendToServer(new PacketUpdateStopPointTransmitter(baseTile.getWorldObj().provider.dimensionId, baseTile.xCoord, baseTile.yCoord, baseTile.zCoord,
+                        array[3], Vec3.createVectorHelper(array[0], array[1], array[2]), profil, redstoneReaction, redstoneProfile));
                 profil++;
             }
 
@@ -215,33 +209,39 @@ public class GuiSpeedTransmitter extends GuiScreen {
             }
 
             profileChange.displayString = "Profile " + profile;
-            speedLimitField.setText(String.valueOf(speedProfiles.get(profile)[0]));
-            nextSpeedLimitField.setText(String.valueOf(speedProfiles.get(profile)[1]));
-            nextSpeedXField.setText(String.valueOf(speedProfiles.get(profile)[2]));
-            nextSpeedYField.setText(String.valueOf(speedProfiles.get(profile)[3]));
-            nextSpeedZField.setText(String.valueOf(speedProfiles.get(profile)[4]));
+            stopPointXField.setText(String.valueOf(stopProfiles.get(profile)[0]));
+            stopPointYField.setText(String.valueOf(stopProfiles.get(profile)[1]));
+            stopPointZField.setText(String.valueOf(stopProfiles.get(profile)[2]));
         }
         if (button.id == 4) {
             if (autofillCompound != null) {
-                speedProfiles.get(profile)[2] = autofillCompound.getInteger("coordinateX");
-                speedProfiles.get(profile)[3] = autofillCompound.getInteger("coordinateY");
-                speedProfiles.get(profile)[4] = autofillCompound.getInteger("coordinateZ");
-                nextSpeedXField.setText(String.valueOf(speedProfiles.get(profile)[2]));
-                nextSpeedYField.setText(String.valueOf(speedProfiles.get(profile)[3]));
-                nextSpeedZField.setText(String.valueOf(speedProfiles.get(profile)[4]));
+                stopProfiles.get(profile)[0] = autofillCompound.getInteger("coordinateX");
+                stopProfiles.get(profile)[1] = autofillCompound.getInteger("coordinateY");
+                stopProfiles.get(profile)[2] = autofillCompound.getInteger("coordinateZ");
+                stopPointXField.setText(String.valueOf(stopProfiles.get(profile)[0]));
+                stopPointYField.setText(String.valueOf(stopProfiles.get(profile)[1]));
+                stopPointZField.setText(String.valueOf(stopProfiles.get(profile)[2]));
             }
 
+        }
+        if (button.id == 5) {
+            if (stopProfiles.get(profile)[3] == 0) {
+                //Set it to station stop.
+                stopProfiles.get(profile)[3] = 1;
+                stopType.displayString = "Station Stop";
+            } else if (stopProfiles.get(profile)[3] == 1) {
+                stopProfiles.get(profile)[3] = 0;
+                stopType.displayString = "Standard Stop";
+            }
         }
     }
 
     @Override
     public void updateScreen() {
         super.updateScreen();
-        if (speedLimitField.isFocused()) speedLimitField.updateCursorCounter();
-        if (nextSpeedLimitField.isFocused()) nextSpeedLimitField.updateCursorCounter();
-        if (nextSpeedXField.isFocused()) nextSpeedXField.updateCursorCounter();
-        if (nextSpeedYField.isFocused()) nextSpeedYField.updateCursorCounter();
-        if (nextSpeedZField.isFocused()) nextSpeedZField.updateCursorCounter();
+        if (stopPointXField.isFocused()) stopPointXField.updateCursorCounter();
+        if (stopPointYField.isFocused()) stopPointYField.updateCursorCounter();
+        if (stopPointZField.isFocused()) stopPointZField.updateCursorCounter();
         if (profileTextField.isFocused()) profileTextField.updateCursorCounter();
     }
 
@@ -260,19 +260,15 @@ public class GuiSpeedTransmitter extends GuiScreen {
           //  PeachysRailtech.updateVariableChannel.sendToServer(new UpdateBaseTimeoutPacket(baseTile.xCoord, baseTile.yCoord, baseTile.zCoord, timeoutAmount));
             mc.thePlayer.closeScreen();
         }
-
-        if (speedLimitField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) speedLimitField.textboxKeyTyped(par1, par2);
-        if (nextSpeedLimitField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) nextSpeedLimitField.textboxKeyTyped(par1, par2);
-        if (nextSpeedXField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) nextSpeedXField.textboxKeyTyped(par1, par2);
-        if (nextSpeedYField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) nextSpeedYField.textboxKeyTyped(par1, par2);
-        if (nextSpeedZField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) nextSpeedZField.textboxKeyTyped(par1, par2);
+        if (stopPointXField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) stopPointXField.textboxKeyTyped(par1, par2);
+        if (stopPointYField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) stopPointYField.textboxKeyTyped(par1, par2);
+        if (stopPointZField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK)) stopPointZField.textboxKeyTyped(par1, par2);
         if (profileTextField.isFocused() && (Character.isDigit(par1) || par2 == Keyboard.KEY_BACK) && Character.getNumericValue(par1) < 4) profileTextField.textboxKeyTyped(par1, par2);
 
-         speedProfiles.get(profile)[0] = isInteger(speedLimitField.getText()) ? Integer.parseInt(speedLimitField.getText()) : 0;
-         speedProfiles.get(profile)[1] = isInteger(nextSpeedLimitField.getText()) ? Integer.parseInt(nextSpeedLimitField.getText()) : 0;
-         speedProfiles.get(profile)[2] = isInteger(nextSpeedXField.getText()) ? Integer.parseInt(nextSpeedXField.getText()) : 0;
-         speedProfiles.get(profile)[3] = isInteger(nextSpeedYField.getText()) ? Integer.parseInt(nextSpeedYField.getText()) : 0;
-         speedProfiles.get(profile)[4] = isInteger(nextSpeedZField.getText()) ? Integer.parseInt(nextSpeedZField.getText()) : 0;
+
+            stopProfiles.get(profile)[0] = isInteger(stopPointXField.getText()) ? Integer.parseInt(stopPointXField.getText()) : 0;
+            stopProfiles.get(profile)[1] = isInteger(stopPointYField.getText()) ? Integer.parseInt(stopPointYField.getText()) : 0;
+            stopProfiles.get(profile)[2] = isInteger(stopPointZField.getText()) ? Integer.parseInt(stopPointZField.getText()) : 0;
          redstoneProfile = isInteger(profileTextField.getText()) ? Integer.parseInt(profileTextField.getText()) : 0;
 
     }
@@ -281,11 +277,9 @@ public class GuiSpeedTransmitter extends GuiScreen {
     protected void mouseClicked(int par1, int par2, int par3) {
        // timeoutTime.mouseClicked(par1, par2, par3);
         super.mouseClicked(par1, par2, par3);
-        speedLimitField.mouseClicked(par1, par2, par3);
-        nextSpeedLimitField.mouseClicked(par1, par2, par3);
-        nextSpeedXField.mouseClicked(par1, par2, par3);
-        nextSpeedYField.mouseClicked(par1, par2, par3);
-        nextSpeedZField.mouseClicked(par1, par2, par3);
+        stopPointXField.mouseClicked(par1, par2, par3);
+        stopPointYField.mouseClicked(par1, par2, par3);
+        stopPointZField.mouseClicked(par1, par2, par3);
         profileTextField.mouseClicked(par1, par2, par3);
     }
     @Override
