@@ -9,6 +9,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import train.common.Traincraft;
+import train.common.core.handlers.ItemHandler;
 import train.common.entity.CargoManager;
 import train.common.enums.CargoItemFilter;
 import train.common.library.GuiIDs;
@@ -120,8 +121,9 @@ public abstract class AbstractStandardFreightCar extends Freight
     }
 
     @Override
-    public final boolean isItemValidForSlot(int i, ItemStack itemstack) {
-        return true;
+    public final boolean isItemValidForSlot(int i, ItemStack itemstack)
+    {
+        return ItemHandler.handleFreight(this, itemstack);
     }
 
     public abstract String getInventoryName();
