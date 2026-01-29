@@ -738,6 +738,7 @@ item.tc:tcRailSmallRoadCrossingDynamic.name=RailRoad Crossing (Dynamic)
 
 <!-- ## TC Keybindings ## -->
 key.categories.traincraft=FoxTC (Traincraft)
+key.categories.unifiedcontrols=FoxTC/FoxDrives
 key.traincraft.horn=Horn/Whistle
 key.traincraft.inventory=Inventory
 key.traincraft.up=Up (Airship)

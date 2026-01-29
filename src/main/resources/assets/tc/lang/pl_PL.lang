@@ -547,7 +547,8 @@ entity.tc.MILW Tender.name=Tender 1935 MILW
 
 description.villager.profession.tc.station_chief=Szef Stacji
 
-key.categories.traincraft=Traincraft
+key.categories.unifiedcontrols=FoxTC/FoxDrives
+key.categories.traincraft=FoxTC (Traincraft)
 key.traincraft.horn=Klakson
 key.traincraft.inventory=Ekwipunek
 key.traincraft.up=Góra

@@ -612,7 +612,8 @@ entity.tc.Loco Steam Alco SC4.name=ALCO SC4
 
 description.villager.profession.tc.station_chief=Riaditeľ stanice
 
-key.categories.traincraft=Traincraft
+key.categories.unifiedcontrols=FoxTC/FoxDrives
+key.categories.traincraft=FoxTC (Traincraft)
 key.traincraft.horn=Pískať
 key.traincraft.inventory=Inventár
 key.traincraft.up=^ Hore

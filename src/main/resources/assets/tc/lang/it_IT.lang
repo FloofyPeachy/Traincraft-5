@@ -550,7 +550,7 @@ entity.tc.MILW Tender.name=Vagone di scorta Hiawatha 1935 MILW
 description.villager.profession.tc.station_chief=Capostazione
 
 <!-- ## KEY ## -->
-key.categories.traincraft=Traincraft
+key.categories.traincraft=FoxTC (Traincraft)
 key.traincraft.horn=Segnale
 key.traincraft.inventory=Inventario
 key.traincraft.up=Su

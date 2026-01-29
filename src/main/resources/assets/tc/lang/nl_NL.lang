@@ -510,7 +510,8 @@ entity.tc.Loco Steam Pannier.name= 0-6-0 Pannier
 
 description.villager.profession.tc.station_chief=Stations Chef
 
-key.categories.traincraft=Traincraft
+key.categories.unifiedcontrols=FoxTC/FoxDrives
+key.categories.traincraft=FoxTC (Traincraft)
 key.traincraft.horn=Toeter
 key.traincraft.inventory=Inventory
 key.traincraft.up=Omhoog

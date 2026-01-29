@@ -379,7 +379,8 @@ entity.tc.Passenger Adler.name=Adler Personenwagen
 
 description.villager.profession.tc.station_chief=Stationschef
 
-key.categories.traincraft=Traincraft
+key.categories.unifiedcontrols=FoxTC/FoxDrives
+key.categories.traincraft=FoxTC (Traincraft)
 key.traincraft.horn=Horn
 key.traincraft.inventory=Inventar
 key.traincraft.up=Hoch
