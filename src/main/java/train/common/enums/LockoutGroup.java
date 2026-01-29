@@ -49,7 +49,10 @@ public enum LockoutGroup implements ILockoutGroup
     DLMR("8ce3fa8e-9f27-48c5-b97e-de12ad735296"),//deadwood & la mesa
     AGW("8ce3fa8e-9f27-48c5-b97e-de12ad735296"),// adelante great western or whatsitsface spelled lol
 
-    JCTransit()
+    JCTransit(),
+
+    //Cheesewheel
+    CDCS("43efda8c-f591-4f7e-bc54-c4978484e69f"), //Clarksville, Deer Creek & Southern
     ;
 
     /**

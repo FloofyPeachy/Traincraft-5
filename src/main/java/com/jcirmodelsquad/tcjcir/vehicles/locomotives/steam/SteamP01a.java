@@ -22,7 +22,7 @@ public class SteamP01a extends SteamTrain {
 		
 		InsertTexture(0, "WRX 10", LockoutGroup.BIDA);
 		InsertTexture(1, "WRX 12", LockoutGroup.BIDA);
-		InsertTexture(2, "CDC&S 7");
+		InsertTexture(2, "CDC&S 7", LockoutGroup.CDCS);
 	}
 
 	@Override

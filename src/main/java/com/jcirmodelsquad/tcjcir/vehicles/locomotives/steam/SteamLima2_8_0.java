@@ -5,6 +5,7 @@ import net.minecraft.world.World;
 import train.common.api.LiquidManager;
 import train.common.api.SteamTrain;
 import train.common.core.util.TraincraftUtil;
+import train.common.enums.LockoutGroup;
 import train.common.library.EnumSounds;
 import train.common.library.EnumTrains;
 import train.common.library.sounds.SoundRecord;
@@ -19,9 +20,9 @@ public class SteamLima2_8_0 extends SteamTrain {
 		super(world, EnumTrains.Lima2_8_0.getTankCapacity(), LiquidManager.WATER_FILTER);
 		
 		InsertTexture(0, "Generic");
-		InsertTexture(1, "CDCS 20");
-		InsertTexture(2, "CDCS 21");
-		InsertTexture(3, "CDCS 22");
+		InsertTexture(1, "CDCS 20", LockoutGroup.CDCS);
+		InsertTexture(2, "CDCS 21", LockoutGroup.CDCS);
+		InsertTexture(3, "CDCS 22", LockoutGroup.CDCS);
 		InsertTexture(4, "A&WRR");
 		InsertTexture(5, "CRIP");
 	}

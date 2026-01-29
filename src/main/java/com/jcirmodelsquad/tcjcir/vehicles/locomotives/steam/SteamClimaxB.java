@@ -22,7 +22,7 @@ public class SteamClimaxB extends SteamTrain {
 		InsertTexture(0, "Hillcrest Lumber Co #9");
 		InsertTexture(1, "Washaska Resources #6", LockoutGroup.BIDA);
 		InsertTexture(2, "Washaska Resources #7", LockoutGroup.BIDA);
-		InsertTexture(3, "Clarks Milling & Lumber Co");
+		InsertTexture(3, "Clarks Milling & Lumber Co", LockoutGroup.CDCS);
 	}
 
 	@Override

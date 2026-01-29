@@ -20,7 +20,7 @@ public class SteamAlco0_6_0T extends SteamTrain {
 		super(world, EnumTrains.Alco0_6_0T.getTankCapacity(), LiquidManager.WATER_FILTER);
 		
 		InsertTexture(0, "Generic");
-		InsertTexture(1, "CDCS");
+		InsertTexture(1, "CDCS", LockoutGroup.CDCS);
 		InsertTexture(2, "SPR", LockoutGroup.SPR);
 	}
 

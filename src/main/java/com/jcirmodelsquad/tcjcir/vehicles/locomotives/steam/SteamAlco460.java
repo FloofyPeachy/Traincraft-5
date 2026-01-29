@@ -21,7 +21,7 @@ public class SteamAlco460 extends SteamTrain {
 		super(world, EnumTrains.Alco460.getTankCapacity(), LiquidManager.WATER_FILTER);
 		
 		InsertTexture(0, "Blank");
-		InsertTexture(1, "CDC&S");
+		InsertTexture(1, "CDC&S", LockoutGroup.CDCS);
 		InsertTexture(2, "RI");
 		InsertTexture(3, "%Lemo");
 		InsertTexture(4, "GCM 67", LockoutGroup.GCM);

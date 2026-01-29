@@ -68,7 +68,7 @@ public class DieselGP7 extends DieselTrain {
         InsertTexture(46, "Great Lakes & Northern Territories (Ex FNCC)");
         InsertTexture(47, "Monongahela");
         InsertTexture(48, "WCP (stupid bozo chop)");
-        InsertTexture(49, "CDCS");
+        InsertTexture(49, "CDCS", LockoutGroup.CDCS);
         InsertTexture(50, "JRN");
         InsertTexture(51, "GCCR");
         InsertTexture(52, "WM (As Delivered)");

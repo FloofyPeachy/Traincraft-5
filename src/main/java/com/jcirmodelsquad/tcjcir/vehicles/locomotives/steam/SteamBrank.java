@@ -5,6 +5,7 @@ import net.minecraft.world.World;
 import train.common.api.LiquidManager;
 import train.common.api.SteamTrain;
 import train.common.core.util.TraincraftUtil;
+import train.common.enums.LockoutGroup;
 import train.common.library.EnumSounds;
 import train.common.library.EnumTrains;
 import train.common.library.sounds.SoundRecord;
@@ -18,7 +19,7 @@ public class SteamBrank extends SteamTrain {
 	public SteamBrank(World world) {
 		super(world, EnumTrains.Brank.getTankCapacity(), LiquidManager.WATER_FILTER);
 		
-		InsertTexture(0, "pregnant man railroad company");
+		InsertTexture(0, "pregnant man railroad company", LockoutGroup.CDCS);
 	}
 
 	@Override
